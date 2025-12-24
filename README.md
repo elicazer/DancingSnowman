@@ -1,0 +1,59 @@
+# Animatronic Snowman
+
+Four-servo animatronic snowman routine. Demo video: https://youtube.com/shorts/crhkF1Pt4T4?si=v03Tk1DF2dJ6dqVK
+
+## Hardware (direct pins)
+- Arduino-compatible board (e.g., Uno)
+- 4x hobby servos (left arm, right arm, head tilt, torso twist)
+- External 5V supply for the servos, shared ground with the Arduino
+- Jumper wires
+
+### Pin map
+- Left arm: pin 3
+- Right arm: pin 5
+- Head: pin 6
+- Torso: pin 9
+
+## Run it (direct pins)
+1) Wire the servos to the pins above; share grounds between the Arduino and the servo power supply.  
+2) Open `AnimatronicSnowman.ino` in the Arduino IDE (built-in `Servo` library is used).  
+3) Select your board/port and click Upload.  
+4) Power the servos from the external 5V supply and watch the routine.
+
+## Using a PCA9685 servo driver (I2C)
+- Install the Arduino Library Manager package: “Adafruit PWM Servo Driver Library”.
+- Wiring (Uno/Nano):
+  - PCA9685 VCC → Arduino 5V
+  - PCA9685 GND → Arduino GND
+  - SDA → A4
+  - SCL → A5
+- Servo power (important):
+  - External 5V supply (2A+; 3–5A if the arms are heavy)
+  - Supply + → PCA9685 V+ terminal (servo power)
+  - Supply – → PCA9685 GND (same rail as above)
+  - Common ground required: Arduino GND and PCA9685 GND are tied via the GND wire above.
+- Channel assignment:
+  - Channel 0 = Left arm
+  - Channel 1 = Right arm
+  - Channel 2 = Head
+  - Channel 3 = Torso
+- Servo wire order on the PCA9685 ports: Brown/Black = GND, Red = V+, Orange/Yellow = Signal.
+
+### Run it (PCA9685)
+1) Wire as above, with an external 5V servo supply and shared ground.  
+2) Open `AnimatronicSnowman_PCA9685.ino` in the Arduino IDE.  
+3) Select board/port, upload, and keep the servo supply off until upload finishes; then power the servos.
+
+## What the sketch does
+- Starts from a neutral 90° pose, then performs arm/head/torso swings in timed clusters.
+- Uses `pose(...)` for quick position changes and `moveSmooth(...)` for slow sweeps.
+- Returns to neutral between sequences to reduce drift.
+
+## Tuning
+- Reduce strain: bump delays slightly higher or trim angle extremes.
+- Change the choreography: edit the angle sets inside the `loop()` sequences.
+- Invert a servo direction: swap its angle endpoints (e.g., `30` ↔ `150`).
+
+## Repo layout
+- `AnimatronicSnowman.ino` — Arduino sketch for direct-to-pin servos.
+- `AnimatronicSnowman_PCA9685.ino` — Arduino sketch for PCA9685 I2C servo driver (Adafruit library).
