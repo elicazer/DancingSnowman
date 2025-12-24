@@ -7,18 +7,7 @@ Four-servo animatronic snowman routine. Demo video: https://youtube.com/shorts/c
 - 4x hobby servos (left arm, right arm, head tilt, torso twist)
 - External 5V supply for the servos, shared ground with the Arduino
 - Jumper wires
-
-### Pin map
-- Left arm: pin 3
-- Right arm: pin 5
-- Head: pin 6
-- Torso: pin 9
-
-## Run it (direct pins)
-1) Wire the servos to the pins above; share grounds between the Arduino and the servo power supply.  
-2) Open `AnimatronicSnowman.ino` in the Arduino IDE (built-in `Servo` library is used).  
-3) Select your board/port and click Upload.  
-4) Power the servos from the external 5V supply and watch the routine.
+  - Pins: left arm 3, right arm 5, head 6, torso 9.
 
 ## Using a PCA9685 servo driver (I2C)
 - Install the Arduino Library Manager package: “Adafruit PWM Servo Driver Library”.
@@ -38,11 +27,6 @@ Four-servo animatronic snowman routine. Demo video: https://youtube.com/shorts/c
   - Channel 2 = Head
   - Channel 3 = Torso
 - Servo wire order on the PCA9685 ports: Brown/Black = GND, Red = V+, Orange/Yellow = Signal.
-
-### Run it (PCA9685)
-1) Wire as above, with an external 5V servo supply and shared ground.  
-2) Open `AnimatronicSnowman_PCA9685.ino` in the Arduino IDE.  
-3) Select board/port, upload, and keep the servo supply off until upload finishes; then power the servos.
 
 ## What the sketch does
 - Starts from a neutral 90° pose, then performs arm/head/torso swings in timed clusters.
